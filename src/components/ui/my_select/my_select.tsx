@@ -1,4 +1,4 @@
-import s from './select.module.scss'
+import s from './my_select.module.scss'
 import { useState } from 'react'
 import upSvg from '../../../assets/svg/up.svg'
 import downSvg from '../../../assets/svg/down.svg'
@@ -7,7 +7,7 @@ type OptionType = {
   id: number
   value: string
 }
-export const SelectDemo = () => {
+export const MySelect = () => {
   const options: OptionType[] = [
     { id: 1, value: 'Select-box1' },
     { id: 2, value: 'Select-box2' },
