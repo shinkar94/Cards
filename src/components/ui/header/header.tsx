@@ -2,9 +2,9 @@ import { Button } from '../button'
 
 import s from './header.module.scss'
 
-import { Logo } from '../../../assets/svg/logo.tsx'
+import { Logo } from '../../../assets/icons'
 import { Typography } from '../typography'
-import { Avatar } from '../../../assets/svg'
+import { Avatar } from '../../../assets/icons'
 import { FC } from 'react'
 type Props = {
   isAuth: boolean
