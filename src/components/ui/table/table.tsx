@@ -1,4 +1,4 @@
-import { ComponentProps, FC } from 'react'
+import { ComponentProps, FC, useState } from 'react'
 
 import { clsx } from 'clsx'
 
@@ -9,6 +9,8 @@ import s from './table.module.scss'
 import playSvg from '../../../assets/icons/play.svg'
 import editSvg from '../../../assets/icons/edit.svg'
 import trashSvg from '../../../assets/icons/trash.svg'
+import arrowDown from '../../../assets/icons/arrowDown.svg'
+import arrowUp from '../../../assets/icons/arrowUp.svg'
 
 export type RootProps = ComponentProps<'table'>
 
@@ -34,18 +36,18 @@ export const Body: FC<BodyProps> = props => {
 
 export type RowProps = ComponentProps<'tr'>
 
-export const Row: FC<RowProps> = ({ className, ...props }) => {
+export const Row: FC<RowProps> = ({ className, ...rest }) => {
   const classNames = {
     row: clsx(className, s.row),
   }
-  return <tr className={classNames.row} {...props} />
+  return <tr className={classNames.row} {...rest} />
 }
 
 export type HeadCellProps = ComponentProps<'th'>
 
 export const HeadCell: FC<HeadCellProps> = ({ className, ...rest }) => {
   const classNames = {
-    headCell: clsx(className, s.headCell),
+    headCell: clsx(className, s.th),
   }
 
   return <th className={classNames.headCell} {...rest} />
@@ -85,23 +87,37 @@ type TypeTestData = {
   createdBy: string
 }
 
-const testData = [
+const testData: TypeTestData[] = [
   { id: 1, name: 'Pack Name', cardsNumber: 4, lastDate: '24.07.2023', createdBy: 'Ivan Ivanov' },
-  { id: 2, name: 'Pack Name', cardsNumber: 4, lastDate: '24.07.2023', createdBy: 'Ivan Ivanov' },
-  { id: 3, name: 'Pack Name', cardsNumber: 4, lastDate: '24.07.2023', createdBy: 'Ivan Ivanov' },
-  { id: 4, name: 'Pack Name', cardsNumber: 4, lastDate: '24.07.2023', createdBy: 'Ivan Ivanov' },
-  { id: 5, name: 'Pack Name', cardsNumber: 4, lastDate: '24.07.2023', createdBy: 'Ivan Ivanov' },
-  { id: 6, name: 'Pack Name', cardsNumber: 4, lastDate: '24.07.2023', createdBy: 'Ivan Ivanov' },
-  { id: 7, name: 'Pack Name', cardsNumber: 4, lastDate: '24.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 2, name: 'Pack Name', cardsNumber: 4, lastDate: '25.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 3, name: 'Pack Name', cardsNumber: 4, lastDate: '26.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 4, name: 'Pack Name', cardsNumber: 4, lastDate: '27.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 5, name: 'Pack Name', cardsNumber: 4, lastDate: '28.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 6, name: 'Pack Name', cardsNumber: 4, lastDate: '29.07.2023', createdBy: 'Ivan Ivanov' },
+  { id: 7, name: 'Pack Name', cardsNumber: 4, lastDate: '30.07.2023', createdBy: 'Ivan Ivanov' },
 ]
 export const Table = () => {
+  const [sortTable, setSortTable] = useState(false)
+  const changeSort = (status: boolean) => setSortTable(status)
+
   return (
     <Root>
       <Head>
         <Row>
           <HeadCell>Name</HeadCell>
           <HeadCell>Cards</HeadCell>
-          <HeadCell>Last Updated</HeadCell>
+          <HeadCell
+            onClick={() => {
+              changeSort(!sortTable)
+            }}
+          >
+            Last Updated{' '}
+            {sortTable ? (
+              <img src={arrowDown} alt="arrowDown" />
+            ) : (
+              <img src={arrowUp} alt="arrowUp" />
+            )}
+          </HeadCell>
           <HeadCell>Created by</HeadCell>
           <HeadCell></HeadCell>
         </Row>

@@ -10,14 +10,19 @@
   border-radius: var(--border-radius-s);
 }
 
-.headCell {
+.th {
   padding: 6px 24px;
 
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-m);
+  text-align: center;
 
   background-color: var(--color-dark-100);
+
+  & img {
+    width: 15px;
+  }
 }
 
 .tableCell {
@@ -27,7 +32,6 @@
   line-height: var(--line-height-m);
   color: white;
 
-  background-color: var(--color-dark-900);
   border-bottom: 1px solid var(--color-bg-dividers);
 
   & img {
@@ -42,7 +46,7 @@
 }
 
 .row {
-  background: #0a6638;
+  cursor: pointer;
 
   &:hover {
     background: var(--color-dark-100);
