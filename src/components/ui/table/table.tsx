@@ -6,11 +6,11 @@ import { Typography } from '../typography'
 
 import s from './table.module.scss'
 
-import playSvg from '../../../assets/icons/play.svg'
-import editSvg from '../../../assets/icons/edit.svg'
-import trashSvg from '../../../assets/icons/trash.svg'
-import arrowDown from '../../../assets/icons/arrowDown.svg'
-import arrowUp from '../../../assets/icons/arrowUp.svg'
+import { ArrowUp } from '../../../assets/icons/arrowUp.tsx'
+import { Play } from '../../../assets/icons/play.tsx'
+import { Edit } from '../../../assets/icons/edit.tsx'
+import { ArrowDown } from '../../../assets/icons/arrowDown.tsx'
+import { Trash } from '../../../assets/icons/trash.tsx'
 
 export type RootProps = ComponentProps<'table'>
 
@@ -111,12 +111,7 @@ export const Table = () => {
               changeSort(!sortTable)
             }}
           >
-            Last Updated{' '}
-            {sortTable ? (
-              <img src={arrowDown} alt="arrowDown" />
-            ) : (
-              <img src={arrowUp} alt="arrowUp" />
-            )}
+            Last Updated {sortTable ? <ArrowDown /> : <ArrowUp />}
           </HeadCell>
           <HeadCell>Created by</HeadCell>
           <HeadCell></HeadCell>
@@ -131,9 +126,9 @@ export const Table = () => {
               <Cell>{el.lastDate}</Cell>
               <Cell>{el.createdBy}</Cell>
               <Cell>
-                <img src={playSvg} alt="play" />
-                <img src={editSvg} alt="edit" />
-                <img src={trashSvg} alt="trash" />
+                <Play />
+                <Edit />
+                <Trash />
               </Cell>
             </Row>
           )

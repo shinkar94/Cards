@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { CheckboxDemo } from './'
 
 const meta = {
-  title: 'Components/CheckboxDemo',
+  title: 'Components/Checkbox',
   component: CheckboxDemo,
   tags: ['autodocs'],
   argTypes: {
@@ -11,6 +11,7 @@ const meta = {
       options: ['default', 'withText'],
       control: { type: 'radio' },
     },
+    onChange: { action: 'checked changes' },
   },
 } satisfies Meta<typeof CheckboxDemo>
 
@@ -20,20 +21,21 @@ type Story = StoryObj<typeof meta>
 export const ShowCheckbox: Story = {
   args: {
     variant: 'default',
+    checked: true,
   },
 }
 
 export const DisabledCheckbox: Story = {
   args: {
-    isChecked: true,
-    isDisabled: true,
+    checked: true,
+    disabled: true,
     variant: 'default',
   },
 }
 
 export const CheckboxWithText: Story = {
   args: {
-    isChecked: false,
+    checked: false,
     variant: 'withText',
     checkBoxText: 'Test',
   },
@@ -41,9 +43,9 @@ export const CheckboxWithText: Story = {
 
 export const DisabledCheckboxWithText: Story = {
   args: {
-    isChecked: false,
+    checked: false,
     variant: 'withText',
-    isDisabled: true,
+    disabled: true,
     checkBoxText: 'Test',
   },
 }

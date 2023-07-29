@@ -1,16 +1,16 @@
+import { FC } from 'react'
+
+import { Logo } from '../../../assets/icons'
 import { Button } from '../button'
+import { DropDownMenuDemo } from '../dropDownMenu'
+import { Typography } from '../typography'
 
 import s from './header.module.scss'
 
-import { Logo } from '../../../assets/icons'
-import { Typography } from '../typography'
-import { Avatar } from '../../../assets/icons'
-import { FC } from 'react'
-type Props = {
+type HeaderProps = {
   isAuth: boolean
 }
-export const Header: FC<Props> = props => {
-  const { isAuth } = props
+export const Header: FC<HeaderProps> = ({ isAuth }) => {
   return (
     <div className={s.headerBlock}>
       <Logo />
@@ -20,7 +20,7 @@ export const Header: FC<Props> = props => {
           <Typography variant={'subtitle1'} className={s.menu_name}>
             Name
           </Typography>
-          <Avatar />
+          <DropDownMenuDemo />
         </div>
       )}
     </div>

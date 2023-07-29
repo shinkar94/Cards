@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 0.75rem 8.5625rem;
+  padding: 0.75rem 8.5rem;
 
   background: var(--color-dark-700);
 
@@ -27,7 +27,7 @@
         content: '';
 
         position: absolute;
-        bottom: -5px; /* Размер смещения (например, -0.2em) */
+        bottom: 0;
         left: 0;
 
         width: 100%;
@@ -37,7 +37,7 @@
     }
 
     & svg {
-      width: 36px;
+      width: 2.25rem;
     }
   }
 }

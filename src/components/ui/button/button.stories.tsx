@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Logout } from '../../../common/assets/img'
+import { Logout } from '../../../assets/icons'
 
 import { Button } from './'
 
@@ -13,6 +13,7 @@ const meta = {
       options: ['primary', 'secondary', 'tertiary', 'link'],
       control: { type: 'radio' },
     },
+    onClick: { action: 'button clicked' },
   },
 } satisfies Meta<typeof Button>
 
