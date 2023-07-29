@@ -1,16 +1,18 @@
 import { FC } from 'react'
 
-import { Logo } from '../../../assets/icons'
+import { Logo } from '../../../common/assets/img'
 import { Button } from '../button'
 import { DropDownMenuDemo } from '../dropDownMenu'
 import { Typography } from '../typography'
 
 import s from './header.module.scss'
 
-type HeaderProps = {
+type Props = {
   isAuth: boolean
 }
-export const Header: FC<HeaderProps> = ({ isAuth }) => {
+export const Header: FC<Props> = props => {
+  const { isAuth } = props
+
   return (
     <div className={s.headerBlock}>
       <Logo />
