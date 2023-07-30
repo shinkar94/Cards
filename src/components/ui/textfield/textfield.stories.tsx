@@ -28,6 +28,7 @@ export const TextFieldDefaultError: Story = {
 }
 export const TextFieldPassword: Story = {
   args: {
+    label: 'Password',
     placeholder: 'Password',
     type: 'password',
     disableValue: false,
@@ -43,6 +44,7 @@ export const TextFieldPasswordError: Story = {
 }
 export const TextFieldSearch: Story = {
   args: {
+    label: 'Search',
     placeholder: 'Search',
     type: 'searchType',
     disableValue: false,
