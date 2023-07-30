@@ -1,12 +1,12 @@
-import { Typography } from '../../ui/typography'
-import { TextField } from '../../ui/textfield'
-import { Button } from '../../ui/button'
+import { Typography } from '../../ui'
+import { Button } from '../../ui'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { ControlledCheckbox } from '../../ui/controled/ControledCheckBox'
 import s from './sign-in.module.scss'
 import { Card } from '../../ui'
+import { ControlledTextField } from '../../ui/controled/conrolled-textFild'
 
 const sigInSchema = z.object({
   email: z.string().email(),
@@ -18,7 +18,6 @@ type SignInFormShem = z.infer<typeof sigInSchema>
 export const SignIn = () => {
   const {
     control,
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignInFormShem>({
@@ -31,17 +30,21 @@ export const SignIn = () => {
     <Card className={s.signBlock}>
       <Typography variant={'large'}>Sign In</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
-          {...register('email')}
+        <ControlledTextField
+          className={s.field}
           errorMessage={errors.email?.message}
-          label={'email'}
+          label={'Email'}
+          name={'email'}
           type={'default'}
+          control={control}
         />
-        <TextField
-          {...register('password')}
+        <ControlledTextField
+          className={s.field}
           errorMessage={errors.password?.message}
-          label={'password'}
+          label={'Password'}
+          name={'password'}
           type={'password'}
+          control={control}
         />
         <ControlledCheckbox
           control={control}
