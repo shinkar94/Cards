@@ -4,7 +4,7 @@ import { Button } from '../../ui/button'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { ControlledCheckbox } from '../../ui/ControledCheckBox'
+import { ControlledCheckbox } from '../../ui/controled/ControledCheckBox'
 import s from './sign-in.module.scss'
 import { Card } from '../../ui'
 
