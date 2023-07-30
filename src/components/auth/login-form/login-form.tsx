@@ -2,9 +2,9 @@ import { useController, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { Button } from '../../ui/button'
-import { CheckboxDemo } from '../../ui/checkbox'
-import { TextField } from '../../ui/textfield'
+import { Button } from '../../ui'
+import { CheckboxDemo } from '../../ui'
+import { TextField } from '../../ui'
 
 const loginSchema = z.object({
   email: z.string().email(),

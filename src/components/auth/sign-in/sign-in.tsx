@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { ControlledCheckbox } from '../../ui/ControledCheckBox'
 import s from './sign-in.module.scss'
-import { Card } from '../../ui/card'
+import { Card } from '../../ui'
 
 const sigInSchema = z.object({
   email: z.string().email(),
@@ -41,13 +41,13 @@ export const SignIn = () => {
           {...register('password')}
           errorMessage={errors.password?.message}
           label={'password'}
-          type={'default'}
+          type={'password'}
         />
         <ControlledCheckbox
           control={control}
           name={'rememberMe'}
           variant={'withText'}
-          checkBoxText={'remember me'}
+          checkBoxText={'Remember me'}
         />
         <div className={s.forgotWrapper}>
           <Button as={'a'} variant={'link'}>

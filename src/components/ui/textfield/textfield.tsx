@@ -57,7 +57,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     }
     const onSearchClearHandler = () => {
       if (onSearchClear) {
-        onSearchClear()
+        onSearchClear?.()
       }
     }
 
@@ -88,7 +88,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               disabled={disableValue}
               onClick={() => setShowPassword(prev => !prev)}
             >
-              {showPassword ? (
+              {!showPassword ? (
                 <Eye fill={disableValue ? '#4c4c4c' : '#fff'} />
               ) : (
                 <NotEye fill={disableValue ? '#4c4c4c' : '#fff'} />
@@ -115,7 +115,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 )
 
 function getType(type: string, showPassword: boolean) {
-  if (type === 'password' && showPassword) {
+  if (type === 'password' && !showPassword) {
     return 'text'
   }
 

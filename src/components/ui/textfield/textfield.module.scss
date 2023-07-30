@@ -1,5 +1,6 @@
 .fieldContainer {
   position: relative;
+  width: 100%;
 
   .search {
     position: absolute;
@@ -78,6 +79,11 @@
     border: 0;
     outline: 0;
   }
+}
+
+.label {
+  margin-bottom: 1px;
+  color: var(--color-dark-100);
 }
 
 .errorMessage {
