@@ -16,29 +16,11 @@
   }
 
   .password {
-    margin-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
   }
 
-  .forgotWrapper {
-    display: flex;
-    justify-content: right;
-    margin-bottom: 4.12rem;
-
-    & a {
-      padding: 0.375rem 0;
-    }
-  }
-
-  .forgotPassword {
-    padding: 0;
-    color: var(--color-light-100);
-
-    &:focus,
-    &:active,
-    &:hover {
-      color: var(--color-light-100);
-      outline: none;
-    }
+  .confirmPassword {
+    margin-bottom: 3.75rem;
   }
 
   .submit {
@@ -52,7 +34,11 @@
     text-align: center;
   }
 
-  .signUp {
+  .signIn {
     text-decoration: underline;
+
+    & p {
+      color: var(--color-accent-500);
+    }
   }
 }
