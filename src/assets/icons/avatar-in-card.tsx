@@ -3,13 +3,16 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) =
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    width={36}
-    height={36}
+    width={96}
+    height={96}
     fill="none"
     ref={ref}
     {...props}
   >
-    <circle cx={18} cy={18} r={18} fill="url(#a)" />
+    <path
+      fill="url(#a)"
+      d="M96 48c0 26.51-21.49 48-48 48S0 74.51 0 48 21.49 0 48 0s48 21.49 48 48Z"
+    />
     <defs>
       <pattern id="a" width={1} height={1} patternContentUnits="objectBoundingBox">
         <use xlinkHref="#b" transform="scale(.005)" />
@@ -25,4 +28,4 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) =
 )
 const ForwardRef = forwardRef(SvgComponent)
 
-export const Avatar = memo(ForwardRef)
+export const AvatarInCard = memo(ForwardRef)

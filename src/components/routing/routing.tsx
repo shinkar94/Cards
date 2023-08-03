@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 
-import { SignIn } from '../auth'
+import { SignIn, CheckEmail } from '../auth'
 import { Typography } from '../ui'
 
 export const Routing = () => {
@@ -8,6 +8,7 @@ export const Routing = () => {
     <Routes>
       <Route path={'/'} element={<Typography variant={'body2'}>Hello</Typography>} />
       <Route path={'/sign-in'} element={<SignIn />} />
+      <Route path={'/check-email'} element={<CheckEmail email={'egorbelozerov@mail.ru'} />} />
     </Routes>
   )
 }
