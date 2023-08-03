@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { ControlledCheckbox } from '../../ui/controled/controled-checkbox'
 import s from './sign-in.module.scss'
 import { Card } from '../../ui'
-import { ControlledTextField } from '../../ui/controled/conrolled-textFild'
+import { ControlledTextField } from '../../ui/controled/controlled-text-field'
 
 const sigInSchema = z.object({
   email: z.string().email(),
