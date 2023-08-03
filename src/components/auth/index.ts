@@ -1,2 +1,3 @@
-export * from './login-form/index.ts'
-export * from './sign-in/index.ts'
+export * from './login-form'
+export * from './sign-in'
+export * from './check-email'
