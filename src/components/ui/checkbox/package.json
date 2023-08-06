@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "format": "prettier --write src",
-    "lint": "eslint --fix src/**/*.{tsx,ts,jsx,js} --no-error-on-unmatched-pattern && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input",
-    "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "dev": "../../../../node_modules/.bin/vite",
+    "build": "../../../../node_modules/.bin/tsc && vite build",
+    "format": "../../../../node_modules/.bin/prettier --write src",
+    "lint": "../../../../node_modules/.bin/eslint --fix src/**/*.{tsx,ts,jsx,js} --no-error-on-unmatched-pattern && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input",
+    "preview": "../../../../node_modules/.bin/vite preview",
+    "storybook": "../../../../node_modules/.bin/storybook dev -p 6006",
+    "build-storybook": "../../../../node_modules/.bin/storybook build"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.5",
