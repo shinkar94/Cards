@@ -1,13 +1,13 @@
 import { ChangeEvent, KeyboardEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
-import { DeleteIcon, Eye, NotEye, Search } from '../../../assets/icons'
+import { DeleteIcon, Eye, NotEye, Search } from '../../../assets'
 import { LabelDemo } from '../label'
 import { Typography } from '../typography'
 
 import s from './textfield.module.scss'
 
 export type TextFieldProps = {
-  type?: 'default' | 'password' | 'searchType'
+  type: 'default' | 'password' | 'searchType'
   label?: string
   errorMessage?: string
   placeholder?: string
@@ -56,7 +56,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     }
     const onSearchClearHandler = () => {
       if (onSearchClear) {
-        onSearchClear?.()
+        onSearchClear()
       }
     }
 
@@ -115,7 +115,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 )
 
 function getType(type: string, showPassword: boolean) {
-  if (type === 'password' && !showPassword) {
+  if (type === 'password' && showPassword) {
     return 'text'
   }
 

@@ -2,15 +2,10 @@ import { ComponentProps, FC, useState } from 'react'
 
 import { clsx } from 'clsx'
 
+import { ArrowDown, ArrowUp, Edit, Trash, Play } from '../../../assets'
 import { Typography } from '../typography'
 
 import s from './table.module.scss'
-
-import { ArrowUp } from '../../../assets/icons/arrowUp.tsx'
-import { Play } from '../../../assets/icons/play.tsx'
-import { Edit } from '../../../assets/icons/edit.tsx'
-import { ArrowDown } from '../../../assets/icons/arrowDown.tsx'
-import { Trash } from '../../../assets/icons/trash.tsx'
 
 export type RootProps = ComponentProps<'table'>
 
@@ -40,6 +35,7 @@ export const Row: FC<RowProps> = ({ className, ...rest }) => {
   const classNames = {
     row: clsx(className, s.row),
   }
+
   return <tr className={classNames.row} {...rest} />
 }
 
@@ -96,6 +92,7 @@ const testData: TypeTestData[] = [
   { id: 6, name: 'Pack Name', cardsNumber: 4, lastDate: '29.07.2023', createdBy: 'Ivan Ivanov' },
   { id: 7, name: 'Pack Name', cardsNumber: 4, lastDate: '30.07.2023', createdBy: 'Ivan Ivanov' },
 ]
+
 export const Table = () => {
   const [sortTable, setSortTable] = useState(false)
   const changeSort = (status: boolean) => setSortTable(status)
@@ -136,4 +133,14 @@ export const Table = () => {
       </Body>
     </Root>
   )
+}
+
+export const TableElement = {
+  Root,
+  Head,
+  Body,
+  Row,
+  HeadCell,
+  Cell,
+  Empty,
 }
