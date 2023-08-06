@@ -38,7 +38,19 @@
     }
 
     & svg {
-      width: 36px;
+      width: 2.25rem;
     }
+  }
+}
+
+.buttonDrop {
+  padding: 0;
+  color: var(--color-light-100);
+
+  &:focus,
+  &:active,
+  &:hover {
+    color: var(--color-light-100);
+    outline: none;
   }
 }
