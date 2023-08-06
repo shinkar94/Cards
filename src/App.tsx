@@ -1,11 +1,14 @@
+import { Provider } from 'react-redux'
+
 import { Header } from './components/ui'
-import { Routing } from './components/routing/routing.tsx'
+import { Router } from './router.tsx'
+import { store } from './services/store.ts'
 
 export function App() {
   return (
-    <>
-      <Header isAuth={false} />
-      <Routing />
-    </>
+    <Provider store={store}>
+      <Header isAuth={true} />
+      <Router />
+    </Provider>
   )
 }
