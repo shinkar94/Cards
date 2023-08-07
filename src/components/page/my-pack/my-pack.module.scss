@@ -1,5 +1,5 @@
-.packListBlock {
-  width: 80rem;
+.myPackBlock {
+  max-width: 80rem;
   margin: 0 auto;
   padding-top: 2.06rem;
 
@@ -18,20 +18,30 @@
 
   .headBlock {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+
     margin-bottom: 1.5rem;
   }
 
   .titleMenu {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
+
     text-align: center;
   }
 
   .textField {
     margin-bottom: 1.5rem;
+  }
+
+  .icons {
+    display: flex;
+    gap: 0.62rem;
+    justify-content: end;
   }
 }
 
@@ -45,4 +55,8 @@
     color: var(--color-light-100);
     outline: none;
   }
+}
+
+.packName {
+  display: inline-block;
 }
