@@ -1,12 +1,6 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  Outlet,
-  RouteObject,
-  RouterProvider,
-} from 'react-router-dom'
+import { createBrowserRouter, Navigate, Outlet, RouteObject } from 'react-router-dom'
 
-import { Layout } from './components/layout'
+import { App } from './App.tsx'
 import { PacksList } from './components/page'
 import { Login } from './components/page/login/login.tsx'
 import { MyPack } from './components/page/my-pack'
@@ -30,9 +24,9 @@ const privateRoutes: RouteObject[] = [
   },
 ]
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: <App />,
     children: [
       {
         element: <PrivateRoutes />,
@@ -49,8 +43,4 @@ function PrivateRoutes() {
   if (isLoading) return <div>...Loading</div>
 
   return data ? <Outlet /> : <Navigate to="/login" />
-}
-
-export const Router = () => {
-  return <RouterProvider router={router} />
 }
