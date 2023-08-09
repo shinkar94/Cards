@@ -4,8 +4,12 @@ import { Link } from 'react-router-dom'
 
 import { ArrowDown, ArrowUp, Edit, Play, Trash } from '../../../assets'
 import useDebounce from '../../../common/hooks/use-debounce.ts'
-import { cardsSlice } from '../../../services/cards'
-import { useCreateDeckMutation, useGetDecksQuery } from '../../../services/decks'
+import { useMeQuery } from '../../../services/auth'
+import {
+  useCreateDeckMutation,
+  useDeletedDeckMutation,
+  useGetDecksQuery,
+} from '../../../services/decks'
 import { deckSlice } from '../../../services/decks/deck.slice.ts'
 import { useAppDispatch, useAppSelector } from '../../../services/store.ts'
 import {
@@ -44,8 +48,9 @@ export const PacksList = () => {
     orderBy: sortTable ? 'created-desc' : 'created-asc',
     itemsPerPage: 20,
   })
-
+  const { data: meData } = useMeQuery()
   const [createDeck] = useCreateDeckMutation()
+  const [deleteDeck] = useDeletedDeckMutation()
   const setSearchByName = (event: string) => {
     dispatch(deckSlice.actions.setSearchByName(event))
   }
@@ -59,10 +64,7 @@ export const PacksList = () => {
   const handleClose = () => {
     setOpen(false)
   }
-
-  const setCurrentIdToStore = (id: string) => {
-    dispatch(cardsSlice.actions.setCurrentPackId({ id }))
-  }
+  const handleDeleteCard = (id: string) => deleteDeck({ id })
 
   return (
     <div className={s.packListBlock}>
@@ -122,12 +124,7 @@ export const PacksList = () => {
             return (
               <TableElement.Row key={el.id}>
                 <TableElement.Cell>
-                  <Button
-                    as={Link}
-                    to="/my-pack"
-                    variant={'link'}
-                    onClick={() => setCurrentIdToStore(el.id)}
-                  >
+                  <Button as={Link} to={`/my-pack/${el.id}`} variant={'link'}>
                     {el.name}
                   </Button>
                 </TableElement.Cell>
@@ -139,8 +136,12 @@ export const PacksList = () => {
                 <TableElement.Cell>
                   <div className={s.icons}>
                     <Play />
-                    <Edit />
-                    <Trash />
+                    {el.author.id === meData?.id && (
+                      <>
+                        <Edit />
+                        <Trash onClick={() => handleDeleteCard(el.id)} />
+                      </>
+                    )}
                   </div>
                 </TableElement.Cell>
               </TableElement.Row>
