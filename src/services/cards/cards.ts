@@ -21,7 +21,7 @@ const cardsApi = baseApi.injectEndpoints({
           method: 'POST',
           body: { ...args },
         }),
-        invalidatesTags: ['Decks'],
+        invalidatesTags: ['Cards'],
       }),
     }
   },
