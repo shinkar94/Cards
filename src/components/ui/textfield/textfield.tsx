@@ -94,7 +94,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                 )}
               </button>
             )}
-            {type === 'searchType' && (
+            {type === 'searchType' && !!value && (
               <button
                 className={s.buttonAction}
                 type={'button'}
