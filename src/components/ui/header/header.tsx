@@ -3,7 +3,8 @@ import { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { Logo, Logout, Profile } from '../../../assets'
-import { ResponseUserType, useLogoutMutation } from '../../../services/auth'
+import { ResponseUserType, useLogoutMutation, util } from '../../../services/auth'
+import { useAppDispatch } from '../../../services/store.ts'
 import { Avatar } from '../avatar'
 import { Button } from '../button'
 import { DropDownMenuDemo } from '../dropDownMenu'
@@ -18,10 +19,12 @@ type HeaderProps = {
 export const Header: FC<HeaderProps> = ({ data }) => {
   const [logout] = useLogoutMutation()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const logoutHandler = () => {
     logout()
       .unwrap()
       .then(() => {
+        dispatch(util.resetApiState())
         navigate('/login')
       })
   }
