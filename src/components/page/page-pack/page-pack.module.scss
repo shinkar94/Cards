@@ -1,34 +1,46 @@
 .packListBlock {
-  width: 80rem;
+  max-width: 80rem;
   margin: 0 auto;
-  padding-top: 1.05rem;
+  padding: 2.06rem 0;
 
-  .backButton {
-    margin-bottom: 2.06rem;
-    padding: 0;
-    color: var(--color-light-100);
+  .headBlock {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
 
-    &:focus,
-    &:active,
-    &:hover {
-      color: var(--color-light-100);
-      outline: none;
+    margin-bottom: 0.5rem;
+  }
+
+  .settingsBlock {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+
+    margin-bottom: 2.25rem;
+
+    .textField {
+      width: 18.6875rem;
+    }
+
+    .titleSettings {
+      margin-bottom: 0.31rem;
+    }
+
+    .switcher {
+      width: 7.25rem;
     }
   }
 
-  .title {
-    margin-bottom: 4.31rem;
-  }
-
-  .description {
-    margin-bottom: 1.88rem;
-    color: var(--color-dark-100);
-    text-align: center;
-  }
-
-  .addNewPackButton {
+  .pagination {
     display: flex;
-    justify-content: center;
-    margin-bottom: 5rem;
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 1rem;
+
+    .selectPagination {
+      width: 70px;
+    }
   }
 }
