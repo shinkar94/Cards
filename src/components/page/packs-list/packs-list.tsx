@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Trash } from '../../../assets'
 import useDebounce from '../../../common/hooks/use-debounce.ts'
 import { useMeQuery } from '../../../services/auth'
@@ -12,7 +10,8 @@ import {
 } from '../../../services/decks'
 import { deckSlice } from '../../../services/decks/deck.slice.ts'
 import { useAppDispatch, useAppSelector } from '../../../services/store.ts'
-import { Button, SliderDemo, TabSwitcher, TextField, Typography } from '../../ui'
+import { Button, Pagination, SliderDemo, TabSwitcher, TextField, Typography } from '../../ui'
+import { SelectRadix } from '../../ui/select/selectRadix.tsx'
 
 import { usePackDeckState } from './hook'
 import { PackModal } from './pack-modal'
@@ -24,7 +23,8 @@ export const PacksList = () => {
   const tabSwitcherOptions = useAppSelector(state => state.deckSlice.tabSwitcherOptions)
   const itemsPerPage = useAppSelector(state => state.deckSlice.itemsPerPage)
   const sliderValues = useAppSelector(state => state.deckSlice.slider)
-  const [value, setValue] = useState<number[]>([sliderValues.minValue, sliderValues.maxValue])
+  const options = useAppSelector(state => state.deckSlice.paginationOptions)
+  const currentPage = useAppSelector(state => state.deckSlice.currentPage)
 
   const dispatch = useAppDispatch()
 
@@ -33,8 +33,6 @@ export const PacksList = () => {
   const {
     packName,
     setPackName,
-    sortTable,
-    setSortTable,
     open,
     setOpen,
     cardId,
@@ -43,22 +41,31 @@ export const PacksList = () => {
     setPrivatePack,
     userId,
     setUserId,
-  } = usePackDeckState('', false)
+    sort,
+    setSort,
+    sortedString,
+    page,
+    setPage,
+    setValueSlider,
+    valueSlider,
+    perPage,
+    onSetPerPageHandler,
+  } = usePackDeckState('', sliderValues, currentPage, itemsPerPage)
 
   const { data: meData } = useMeQuery()
   const { data } = useGetDecksQuery({
     name: newInitialName,
-    orderBy: sortTable ? 'created-asc' : 'created-desc',
-    itemsPerPage,
+    orderBy: sortedString,
+    itemsPerPage: perPage.value,
     authorId: userId,
-    minCardsCount: value[0],
-    maxCardsCount: value[1],
+    minCardsCount: valueSlider[0],
+    maxCardsCount: valueSlider[1],
+    currentPage: page,
   })
   const [createDeck] = useCreateDeckMutation()
   const [deleteDeck] = useDeletedDeckMutation()
   const [editDeck] = useUpdateDeckMutation()
 
-  const changeSort = (status: boolean) => setSortTable(status)
   const setSearchByName = (event: string) => {
     dispatch(deckSlice.actions.setSearchByName(event))
   }
@@ -125,7 +132,11 @@ export const PacksList = () => {
           <Typography variant={'body2'} className={s.titleSettings}>
             Number of cards
           </Typography>
-          <SliderDemo value={value} setValue={setValue} maxValue={sliderValues.maxValue} />
+          <SliderDemo
+            value={valueSlider}
+            setValue={setValueSlider}
+            maxValue={data?.maxCardsCount}
+          />
         </div>
         <Button variant={'secondary'}>
           <Trash />
@@ -134,8 +145,6 @@ export const PacksList = () => {
       </div>
       <TablePacksList
         data={data}
-        sortTable={sortTable}
-        changeSort={changeSort}
         authData={meData}
         setIsMyPackHandler={setIsMyPackHandler}
         handleOpen={handleOpen}
@@ -143,7 +152,20 @@ export const PacksList = () => {
         setCardId={setCardId}
         setOpen={setOpen}
         open={open}
+        sort={sort}
+        setSort={setSort}
       />
+      <div className={s.pagination}>
+        <Pagination count={data?.pagination.totalPages} page={page} onChange={setPage} />
+        <Typography variant={'body2'}>Показать</Typography>
+        <SelectRadix
+          options={options}
+          defaultValue={perPage.value}
+          onValueChange={onSetPerPageHandler}
+          classname={s.selectPagination}
+        />
+        <Typography variant={'body2'}>На странице</Typography>
+      </div>
       <PackModal
         open={open}
         packName={packName}
