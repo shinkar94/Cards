@@ -1,34 +1,47 @@
+import { FC } from 'react'
+
 import * as RadioGroup from '@radix-ui/react-radio-group'
+
+import { Typography } from '../typography'
 
 import s from './radioGroup.module.scss'
 
-export const RadioGroupDemo = () => (
-  <form>
-    <RadioGroup.Root className={s.radioGroupRoot} defaultValue="default" aria-label="View density">
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <RadioGroup.Item className={s.radioGroupItem} value="default" id="r1">
-          <RadioGroup.Indicator className={s.radioGroupIndicator} />
-        </RadioGroup.Item>
-        <label className={s.label} htmlFor="r1">
-          Default
-        </label>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <RadioGroup.Item className={s.radioGroupItem} value="comfortable" id="r2">
-          <RadioGroup.Indicator className={s.radioGroupIndicator} />
-        </RadioGroup.Item>
-        <label className={s.label} htmlFor="r2">
-          Comfortable
-        </label>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <RadioGroup.Item className={s.radioGroupItem} value="compact" id="r3">
-          <RadioGroup.Indicator className={s.radioGroupIndicator} />
-        </RadioGroup.Item>
-        <label className={s.label} htmlFor="r3">
-          Compact
-        </label>
-      </div>
-    </RadioGroup.Root>
-  </form>
-)
+type RadioGroupProps = {
+  classname?: string
+  options?: any[]
+  onChangeOption?: (option: any) => void
+  isDisabled?: boolean
+}
+export const RadioGroupDemo: FC<RadioGroupProps> = ({
+  isDisabled = false,
+  options,
+  onChangeOption,
+  classname,
+}) => {
+  return (
+    <form>
+      <RadioGroup.Root
+        className={`${s.radioGroupRoot} ${classname}`}
+        onValueChange={onChangeOption}
+      >
+        {options?.map(o => {
+          return (
+            <div className={s.itemGroup} key={o.id}>
+              <RadioGroup.Item
+                className={s.radioGroupItem}
+                disabled={isDisabled}
+                value={o.id}
+                id={o.id}
+              >
+                <RadioGroup.Indicator className={s.radioGroupIndicator} />
+              </RadioGroup.Item>
+              <label className={`${s.label} ${isDisabled ? s.labelDisabled : ''}`} htmlFor={o.id}>
+                <Typography variant={'body2'}>{o.value}</Typography>
+              </label>
+            </div>
+          )
+        })}
+      </RadioGroup.Root>
+    </form>
+  )
+}
