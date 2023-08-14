@@ -2,9 +2,9 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 
-import { baseApi } from '../../services/base-api.ts'
-import { cardsSlice } from '../../services/cards'
-import { deckSlice } from '../../services/decks/deck.slice.ts'
+import { baseApi } from '@/services/base-api.ts'
+import { cardsSlice } from '@/services/cards'
+import { deckSlice } from '@/services/decks/deck.slice.ts'
 
 export const storyBookStore = configureStore({
   reducer: {
