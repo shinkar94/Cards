@@ -1,24 +1,24 @@
 import { useState } from 'react'
 
-import { Trash } from '../../../assets'
 import useDebounce from '../../../common/hooks/use-debounce.ts'
-import { useMeQuery } from '../../../services/auth'
-import { cardsSlice } from '../../../services/cards'
+import { Button, Pagination, SliderDemo, TabSwitcher, TextField, Typography } from '../../ui'
+import { PackModal } from '../common/modals/pack-modal'
+import { usePackDeckState } from '../packs-list/hook'
+import { TablePacksList } from '../packs-list/table-packs-list'
+
+import s from './page-pack.module.scss'
+
+import { Trash } from '@/assets'
+import { useMeQuery } from '@/services/auth'
+import { cardsSlice } from '@/services/cards'
 import {
   useCreateDeckMutation,
   useDeletedDeckMutation,
   useGetDecksQuery,
   useUpdateDeckMutation,
-} from '../../../services/decks'
-import { deckSlice } from '../../../services/decks/deck.slice.ts'
-import { useAppDispatch, useAppSelector } from '../../../services/store.ts'
-import { Button, Pagination, SliderDemo, TabSwitcher, TextField, Typography } from '../../ui'
-import { SelectRadix } from '../../ui/select/selectRadix.tsx'
-import { usePackDeckState } from '../packs-list/hook'
-import { PackModal } from '../packs-list/pack-modal'
-import { TablePacksList } from '../packs-list/table-packs-list'
-
-import s from './page-pack.module.scss'
+} from '@/services/decks'
+import { deckSlice } from '@/services/decks/deck.slice.ts'
+import { useAppDispatch, useAppSelector } from '@/services/store.ts'
 
 export const PacksList = () => {
   const initialName = useAppSelector(state => state.deckSlice.searchByName)

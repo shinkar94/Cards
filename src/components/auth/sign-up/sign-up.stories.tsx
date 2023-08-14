@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { BrowserRouterDecorator } from '../../../common/utils/decorators.tsx'
-
 import { SignUp } from './sign-up.tsx'
+
+import { BrowserRouterDecorator, ReduxStoreProviderDecorator } from '@/common'
 
 const meta = {
   title: 'Auth/SignUp',
   component: SignUp,
   tags: ['autodocs'],
-  decorators: [BrowserRouterDecorator],
+  decorators: [BrowserRouterDecorator, ReduxStoreProviderDecorator],
 } satisfies Meta<typeof SignUp>
 
 export default meta

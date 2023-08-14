@@ -1,18 +1,18 @@
 import { FC } from 'react'
 
-import { ResponseUserType } from '../../../../services/auth'
-import { Avatar } from '../../avatar'
-import { Typography } from '../../typography'
-
 import s from './profile-block.module.scss'
 
+import { Typography } from '@/components/ui'
+import { AvatarDemo } from '@/components/ui/avatar'
+import { ResponseUserType } from '@/services/auth'
+
 type PropsType = {
-  data?: ResponseUserType
+  data?: ResponseUserType | null
 }
 export const ProfileBlock: FC<PropsType> = ({ data }) => {
   return (
     <div className={s.infoBlock}>
-      <Avatar src={data?.avatar} />
+      <AvatarDemo src={data?.avatar} name={data?.name} />
       <div className={s.info}>
         <Typography variant={'subtitle2'}>{data?.name}</Typography>
         <Typography variant={'caption'} className={s.email}>

@@ -2,9 +2,9 @@ import { FC } from 'react'
 
 import * as Slider from '@radix-ui/react-slider'
 
-import { Typography } from '../typography'
-
 import s from './slider.module.scss'
+
+import { Typography } from '@/components/ui'
 
 type SliderPropsType = {
   value: number[]
@@ -13,10 +13,6 @@ type SliderPropsType = {
 }
 
 export const SliderDemo: FC<SliderPropsType> = ({ value, setValue, maxValue = 10 }) => {
-  const omChangeValue = (valueNew: number[]) => {
-    setValue(valueNew)
-  }
-
   return (
     <div className={s.sliderBlock}>
       <div className={s.countBlock}>
@@ -24,8 +20,8 @@ export const SliderDemo: FC<SliderPropsType> = ({ value, setValue, maxValue = 10
       </div>
       <Slider.Root
         className={s.sliderRoot}
-        onValueChange={omChangeValue}
-        defaultValue={value}
+        onValueChange={setValue}
+        value={value}
         max={maxValue}
         step={1}
       >

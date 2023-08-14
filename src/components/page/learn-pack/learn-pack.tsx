@@ -2,25 +2,21 @@ import { FC, useState } from 'react'
 
 import { Link, useParams } from 'react-router-dom'
 
-import { Back } from '../../../assets'
-import {
-  useGetDeckQuery,
-  useLearnDeckQuery,
-  useUpdateGradeCardMutation,
-} from '../../../services/decks'
-import { Button, Card, RadioGroupDemo, Typography } from '../../ui'
-
 import s from './learn-pack.module.scss'
+
+import { Back } from '@/assets'
+import { Button, Card, RadioGroupDemo, Typography } from '@/components/ui'
+import { useGetDeckQuery, useLearnDeckQuery, useUpdateGradeCardMutation } from '@/services/decks'
 
 export const LearnPack = () => {
   const params = useParams<{ id: string }>()
+
   const [showAnswer, setShowAnswer] = useState(false)
 
   const { data: deck } = useGetDeckQuery({ id: params.id })
   const { data: randomCard } = useLearnDeckQuery({
     id: params.id,
   })
-
   const [updateCardGrade] = useUpdateGradeCardMutation()
 
   const updateCardGradeHandler = (grade: number) => {
@@ -78,15 +74,17 @@ const AnswerPage: FC<PropsType> = ({ answer, setNewQuestion }) => {
     { id: 4, value: 'Confused' },
     { id: 5, value: 'Knew the answer' },
   ]
-
   const onClickHandler = () => {
     setNewQuestion(value)
   }
 
   return (
     <div className={s.answerBlock}>
-      <Typography variant={'body1'} className={s.title}>
-        Answer: ${answer}
+      <Typography variant={'subtitle1'} className={s.title}>
+        Answer:{' '}
+        <Typography variant={'body1'} className={s.answer}>
+          {answer}
+        </Typography>
       </Typography>
       <Typography variant={'subtitle1'} className={s.grade}>
         Rate yourself:

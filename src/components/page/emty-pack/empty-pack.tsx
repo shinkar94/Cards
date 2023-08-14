@@ -2,11 +2,12 @@ import { useState } from 'react'
 
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
-import { Back } from '../../../assets'
-import { useCreateCardMutation } from '../../../services/cards'
 import { Button, Modal, TextField, Typography } from '../../ui'
 
 import s from './empty-pack.module.scss'
+
+import { Back } from '@/assets'
+import { useCreateCardMutation } from '@/services/cards'
 
 export const EmptyPack = () => {
   const [question, setQuestion] = useState<string>('')

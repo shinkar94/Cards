@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { BrowserRouterDecorator } from '../../../common/utils/decorators.tsx'
-
 import { LoginForm } from './login-form'
+
+import { BrowserRouterDecorator } from '@/common/utils/decorators.tsx'
 
 const meta = {
   title: 'Auth/LoginForm',

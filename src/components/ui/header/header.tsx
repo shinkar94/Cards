@@ -1,32 +1,23 @@
 import { FC } from 'react'
 
-import { Link, useNavigate } from 'react-router-dom'
-
-import { Logo, Logout, Profile } from '../../../assets'
-import { ResponseUserType, useLogoutMutation, util } from '../../../services/auth'
-import { useAppDispatch } from '../../../services/store.ts'
-import { Avatar } from '../avatar'
-import { Button } from '../button'
-import { DropDownMenuDemo } from '../dropDownMenu'
-import { Typography } from '../typography'
+import { Link } from 'react-router-dom'
 
 import s from './header.module.scss'
-import { ProfileBlock } from './profile-block'
+
+import { Logo, Logout, Profile } from '@/assets'
+import { Button, DropDownMenuDemo, Typography } from '@/components/ui'
+import { AvatarDemo } from '@/components/ui/avatar'
+import { ProfileBlock } from '@/components/ui/header/profile-block'
+import { ResponseUserType, useLogoutMutation } from '@/services/auth'
 
 type HeaderProps = {
-  data?: ResponseUserType
+  data?: ResponseUserType | null
 }
 export const Header: FC<HeaderProps> = ({ data }) => {
   const [logout] = useLogoutMutation()
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+
   const logoutHandler = () => {
     logout()
-      .unwrap()
-      .then(() => {
-        dispatch(util.resetApiState())
-        navigate('/login')
-      })
   }
 
   const dropDownMenu = [
@@ -34,7 +25,7 @@ export const Header: FC<HeaderProps> = ({ data }) => {
     {
       id: 2,
       component: (
-        <Button variant={'link'} className={s.buttonDrop}>
+        <Button as={Link} to={'/profile'} variant={'link'} className={s.buttonDrop}>
           <Profile />
           <Typography variant={'caption'}>My Profile</Typography>
         </Button>
@@ -63,7 +54,10 @@ export const Header: FC<HeaderProps> = ({ data }) => {
             <Typography variant={'subtitle1'} className={s.menu_name}>
               {data.name}
             </Typography>
-            <DropDownMenuDemo items={dropDownMenu} trigger={<Avatar src={data.avatar} />} />
+            <DropDownMenuDemo
+              items={dropDownMenu}
+              trigger={<AvatarDemo src={data.avatar} name={data.name} />}
+            />
           </div>
         )}
       </div>
