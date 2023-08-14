@@ -1,22 +1,30 @@
-import { Trash } from '../../../assets'
-import useDebounce from '../../../common/hooks/use-debounce.ts'
-import { useMeQuery } from '../../../services/auth'
-import { cardsSlice } from '../../../services/cards'
+import s from './packs-list.module.scss'
+
+import { Trash } from '@/assets'
+import { useDebounce } from '@/common/hooks'
+import { TableModal } from '@/components/page/common/modals'
+import { usePackDeckState } from '@/components/page/packs-list/hook'
+import { TablePacksList } from '@/components/page/packs-list/table-packs-list'
+import {
+  Button,
+  Pagination,
+  SliderDemo,
+  SuperSelect,
+  TabSwitcher,
+  TextField,
+  Typography,
+} from '@/components/ui'
+import { useMeQuery } from '@/services/auth'
+import { cardsSlice } from '@/services/cards'
 import {
   useCreateDeckMutation,
   useDeletedDeckMutation,
   useGetDecksQuery,
   useUpdateDeckMutation,
-} from '../../../services/decks'
-import { deckSlice } from '../../../services/decks/deck.slice.ts'
-import { useAppDispatch, useAppSelector } from '../../../services/store.ts'
-import { Button, Pagination, SliderDemo, TabSwitcher, TextField, Typography } from '../../ui'
-import { SelectRadix } from '../../ui/select/selectRadix.tsx'
-
-import { usePackDeckState } from './hook'
-import { PackModal } from './pack-modal'
-import s from './packs-list.module.scss'
-import { TablePacksList } from './table-packs-list'
+} from '@/services/decks'
+import { deckSlice } from '@/services/decks/deck.slice.ts'
+import { modalActions, NameModal, selectOpenModals, selectSettings } from '@/services/modal'
+import { useAppDispatch, useAppSelector } from '@/services/store.ts'
 
 export const PacksList = () => {
   const initialName = useAppSelector(state => state.deckSlice.searchByName)
@@ -25,20 +33,13 @@ export const PacksList = () => {
   const sliderValues = useAppSelector(state => state.deckSlice.slider)
   const options = useAppSelector(state => state.deckSlice.paginationOptions)
   const currentPage = useAppSelector(state => state.deckSlice.currentPage)
-
+  const { addPack, editPack, deletePack } = useAppSelector(selectOpenModals)
+  const { privatePack, packName } = useAppSelector(selectSettings)
   const dispatch = useAppDispatch()
 
-  const newInitialName = useDebounce(initialName, 1000)
-
   const {
-    packName,
-    setPackName,
-    open,
-    setOpen,
     cardId,
     setCardId,
-    privatePack,
-    setPrivatePack,
     userId,
     setUserId,
     sort,
@@ -50,7 +51,9 @@ export const PacksList = () => {
     valueSlider,
     perPage,
     onSetPerPageHandler,
-  } = usePackDeckState('', sliderValues, currentPage, itemsPerPage)
+  } = usePackDeckState(sliderValues, currentPage, itemsPerPage)
+
+  const newInitialName = useDebounce(initialName, 1000)
 
   const { data: meData } = useMeQuery()
   const { data } = useGetDecksQuery({
@@ -69,27 +72,6 @@ export const PacksList = () => {
   const setSearchByName = (event: string) => {
     dispatch(deckSlice.actions.setSearchByName(event))
   }
-  const onHandlerActionClicked = () => {
-    ;(open.addNewPack && createDeck({ name: packName })) ||
-      (open.editPack && editDeck({ id: cardId, name: packName })) ||
-      (open.deletePack && deleteDeck({ id: cardId }))
-
-    setOpen({ ...open, addNewPack: false, editPack: false, deletePack: false })
-    setPackName('')
-  }
-  const handleOpen = (value: string) => {
-    setOpen(prevOpen => ({
-      ...prevOpen,
-      [value]: true,
-    }))
-  }
-  const handleClose = (value: string) => {
-    setOpen(prevOpen => ({
-      ...prevOpen,
-      [value]: false,
-    }))
-    setPackName('')
-  }
   const setIsMyPackHandler = (value: boolean) => {
     dispatch(cardsSlice.actions.setIsMyPack({ isMyPack: value }))
   }
@@ -100,19 +82,32 @@ export const PacksList = () => {
       setUserId('')
     }
   }
-
   const clearFilterData = () => {
     setSearchByName('')
     handleTabSort('All cards')
     setValueSlider([sliderValues.minValue, sliderValues.maxValue])
     setSort({ key: 'updated', direction: 'asc' })
   }
+  const onHandlerActionClicked = (value: NameModal) => {
+    if (addPack) {
+      createDeck({ name: packName, isPrivate: privatePack })
+    } else if (editPack) {
+      editDeck({ id: cardId, name: packName, isPrivate: privatePack })
+    } else if (deletePack) {
+      deleteDeck({ id: cardId })
+    }
+    dispatch(modalActions.setCloseModal(value))
+    dispatch(modalActions.setClearState({}))
+  }
+  const setOpen = () => {
+    dispatch(modalActions.setOpenModal('addPack'))
+  }
 
   return (
     <div className={s.packListBlock}>
       <div className={s.headBlock}>
         <Typography variant={'large'}>Packs list</Typography>
-        <Button variant={'primary'} onClick={() => handleOpen('addNewPack')}>
+        <Button variant={'primary'} onClick={setOpen}>
           Add New Pack
         </Button>
       </div>
@@ -154,18 +149,14 @@ export const PacksList = () => {
         data={data}
         authData={meData}
         setIsMyPackHandler={setIsMyPackHandler}
-        handleOpen={handleOpen}
-        setPackName={setPackName}
         setCardId={setCardId}
-        setOpen={setOpen}
-        open={open}
         sort={sort}
         setSort={setSort}
       />
       <div className={s.pagination}>
         <Pagination count={data?.pagination.totalPages} page={page} onChange={setPage} />
         <Typography variant={'body2'}>Показать</Typography>
-        <SelectRadix
+        <SuperSelect
           options={options}
           defaultValue={perPage.value}
           onValueChange={onSetPerPageHandler}
@@ -173,15 +164,7 @@ export const PacksList = () => {
         />
         <Typography variant={'body2'}>На странице</Typography>
       </div>
-      <PackModal
-        open={open}
-        packName={packName}
-        handleClose={handleClose}
-        onHandlerActionClicked={onHandlerActionClicked}
-        setPackName={setPackName}
-        privatePack={privatePack}
-        setPrivatePack={setPrivatePack}
-      />
+      <TableModal handleClicked={onHandlerActionClicked} />
     </div>
   )
 }

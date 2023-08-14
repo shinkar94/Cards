@@ -5,31 +5,35 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
-import { Edit, Logout } from '../../../assets'
-import { Button, Card, ControlledTextField, Typography } from '../../ui'
-import { Avatar } from '../../ui/avatar'
-
 import s from './personalInformation.module.scss'
 
+import { Edit, Logout } from '@/assets'
+import { Button, Card, ControlledTextField, Typography } from '@/components/ui'
+import { AvatarDemo } from '@/components/ui/avatar'
+
 const sigInSchema = z.object({
-  nickName: z.string().trim().min(1),
+  name: z.string().trim().min(1),
 })
 
 type SignInFormShem = z.infer<typeof sigInSchema>
 
 type PropsType = {
-  name: string
-  email: string
+  name?: string
+  email?: string
   avatar?: string
+  logout: () => void
+  update: (value: string) => void
 }
 
-export const PersonalInformation: FC<PropsType> = ({ name, email }) => {
+export const PersonalInformation: FC<PropsType> = ({ name, email, avatar, logout, update }) => {
   const [editMode, setEditMode] = useState<boolean>(false)
+
   const { control, handleSubmit } = useForm<SignInFormShem>({
     resolver: zodResolver(sigInSchema),
   })
+
   const onSubmit = (data: SignInFormShem) => {
-    console.log(data)
+    update(data.name)
   }
 
   return (
@@ -39,7 +43,7 @@ export const PersonalInformation: FC<PropsType> = ({ name, email }) => {
       </Typography>
       <div className={s.avatarBlock}>
         <div className={s.avatar}>
-          <Avatar size={'96px'} />
+          <AvatarDemo src={avatar} name={name} className={s.avatar} />
           {!editMode && (
             <div className={s.avatarEdit}>
               <Edit />
@@ -50,19 +54,23 @@ export const PersonalInformation: FC<PropsType> = ({ name, email }) => {
       {editMode ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <ControlledTextField
-            name={'nickName'}
-            label={'Nickname'}
+            name={'name'}
+            label={'Name'}
             defaultValue={name}
             type={'default'}
             control={control}
             className={s.editNickName}
-            placeholder={'Nickname'}
+            placeholder={'Name'}
           />
           <Button
             fullWidth={true}
             className={s.submit}
             type="submit"
-            onClick={() => setEditMode(false)}
+            onClick={() =>
+              setTimeout(() => {
+                setEditMode(false)
+              }, 0)
+            }
           >
             Save Changes
           </Button>
@@ -73,12 +81,17 @@ export const PersonalInformation: FC<PropsType> = ({ name, email }) => {
             <Typography variant={'h1'} className={s.name}>
               {name}
             </Typography>
-            <Edit className={s.changeName} onClick={() => setEditMode(true)} />
+            <Edit
+              className={s.changeName}
+              onClick={() => {
+                setEditMode(true)
+              }}
+            />
           </div>
           <Typography variant={'body2'} as={'span'} className={s.email}>
             {email}
           </Typography>
-          <Button as={Link} to="/sign-up" variant={'secondary'} className={s.logout}>
+          <Button as={Link} to="/login" variant={'secondary'} className={s.logout} onClick={logout}>
             <Logout />
             <Typography variant={'subtitle2'}>Logout</Typography>
           </Button>

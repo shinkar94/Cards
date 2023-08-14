@@ -1,5 +1,3 @@
-import { baseApi } from '../base-api.ts'
-
 import {
   CreateGetDeckArgs,
   Deck,
@@ -8,6 +6,8 @@ import {
   GetDecksArgs,
   LearnDeckResponse,
 } from './types.ts'
+
+import { baseApi } from '@/services/base-api.ts'
 
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -29,11 +29,24 @@ const decksApi = baseApi.injectEndpoints({
         }),
         providesTags: ['Decks'],
       }),
-      updateDeck: builder.mutation<any, { id: string; name: string }>({
-        query: ({ id, name }) => ({
+      createDeck: builder.mutation<Deck, CreateGetDeckArgs>({
+        query: ({ name, isPrivate }) => {
+          return {
+            url: 'v1/decks',
+            method: 'POST',
+            body: { name, isPrivate },
+          }
+        },
+        invalidatesTags: ['Decks'],
+      }),
+      updateDeck: builder.mutation<
+        any,
+        { id: string; name: string; isPrivate: boolean | undefined }
+      >({
+        query: ({ id, name, isPrivate }) => ({
           url: `v1/decks/${id}`,
           method: 'PATCH',
-          body: { name },
+          body: { name, isPrivate },
         }),
         invalidatesTags: ['Decks'],
       }),
@@ -42,16 +55,6 @@ const decksApi = baseApi.injectEndpoints({
           url: `v1/decks/${id}`,
           method: 'DELETE',
         }),
-        invalidatesTags: ['Decks'],
-      }),
-      createDeck: builder.mutation<Deck, CreateGetDeckArgs>({
-        query: ({ name }) => {
-          return {
-            url: 'v1/decks',
-            method: 'POST',
-            body: { name },
-          }
-        },
         invalidatesTags: ['Decks'],
       }),
       learnDeck: builder.query<
@@ -85,7 +88,6 @@ const decksApi = baseApi.injectEndpoints({
 export const {
   useGetDecksQuery,
   useGetDeckQuery,
-  useLazyGetDecksQuery,
   useCreateDeckMutation,
   useDeletedDeckMutation,
   useUpdateDeckMutation,

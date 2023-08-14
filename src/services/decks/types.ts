@@ -14,6 +14,7 @@ export type DecksResponse = PaginatedEntity<Deck> & {
 
 export type CreateGetDeckArgs = {
   name: string
+  isPrivate?: boolean
 }
 
 export type Author = {
@@ -54,6 +55,7 @@ export type DeckResponseAuthor = {
   id: string
   name: string
 }
+
 export type LearnDeckResponse = {
   id: string
   deckId: string
